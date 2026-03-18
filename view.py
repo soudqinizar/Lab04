@@ -4,7 +4,7 @@ class View(object):
     def __init__(self, page: ft.Page):
         # Page
         self.page = page
-        self.page.title = "TdP 2024 - Lab 04 - SpellChecker ++"
+        self.page.title = "TdP 2026 - Lab 04 - SpellChecker++"
         self.page.horizontal_alignment = 'CENTER'
         self.page.theme_mode = ft.ThemeMode.LIGHT
         # Controller
@@ -28,7 +28,23 @@ class View(object):
 
         # Add your stuff here
 
-        # self.page.add([])
+        testo = ft.Text("")
+        def cambia_lingua(e):
+            lingua = e.control.value
+            testo.value = f"Hai scelto: {lingua}"
+            self.page.update()
+
+        self._lingue = ft.Dropdown(
+            value="Scegli una lingua",
+            options=[
+                ft.dropdown.Option(key="italiano", text="Italiano"),
+                ft.dropdown.Option(key="inglese", text="Inglese"),
+                ft.dropdown.Option(key="spagnolo", text="Spagnolo")
+            ],
+            on_change=cambia_lingua  # 👈 qui agganci l'evento
+        )
+
+        self.page.add(self._lingue, testo)
 
         self.page.update()
 
