@@ -13,6 +13,26 @@ class View(object):
         self.__title = None
         self.__theme_switch = None
 
+    @property
+    def print(self):
+        return self.__print
+
+    @property
+    def textfield(self):
+        return self.__textfield
+
+    @property
+    def lingue(self):
+        return self.__lingue
+
+    @property
+    def ricerca(self):
+        return self.__ricerca
+
+
+
+
+
         # define the UI elements and populate the page
 
     def add_content(self):
@@ -28,23 +48,57 @@ class View(object):
 
         # Add your stuff here
 
-        testo = ft.Text("")
+        testoLingua = ft.Text("")
         def cambia_lingua(e):
             lingua = e.control.value
-            testo.value = f"Hai scelto: {lingua}"
+            testoLingua.value = f"Hai scelto: {lingua}"
             self.page.update()
+            return lingua
 
-        self._lingue = ft.Dropdown(
+        self.__lingue = ft.Dropdown(
             value="Scegli una lingua",
             options=[
-                ft.dropdown.Option(key="italiano", text="Italiano"),
-                ft.dropdown.Option(key="inglese", text="Inglese"),
-                ft.dropdown.Option(key="spagnolo", text="Spagnolo")
+                ft.dropdown.Option(key="italian", text="Italiano"),
+                ft.dropdown.Option(key="english", text="Inglese"),
+                ft.dropdown.Option(key="spanish", text="Spagnolo")
             ],
             on_change=cambia_lingua  # 👈 qui agganci l'evento
         )
 
-        self.page.add(self._lingue, testo)
+        self.page.add(self.__lingue ,testoLingua)
+
+
+        testoRicerca = ft.Text("")
+
+        def tipoRicerca(e):
+            ricerca = e.control.value
+            testoRicerca.value = f"Hai scelto: {ricerca}"
+            self.page.update()
+            return ricerca
+
+        self.__ricerca = ft.Dropdown(
+            value="Scegli una delle seguenti opzioni",
+            options=[
+                ft.dropdown.Option(key="Default", text="Default"),
+                ft.dropdown.Option(key="Linear", text="Linear"),
+                ft.dropdown.Option(key="Dichotomic", text="Dichotomic")
+            ],
+            on_change= tipoRicerca  # 👈 qui agganci l'evento
+        )
+
+        self.__textfield = ft.TextField(label="Scrivi qualcosa")
+
+        self._btnCorrezione = ft.ElevatedButton(text = "Clicca qui",
+                                                on_click= self.__controller.check, width=200)
+
+        row2 = ft.Row([self.__ricerca, testoRicerca, self.__textfield, self._btnCorrezione])
+
+        self.page.add(row2)
+
+        self.__print = ft.ListView(expand=True)
+        self.page.add(self.__print)
+
+
 
         self.page.update()
 
